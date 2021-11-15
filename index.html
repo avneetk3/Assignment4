@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JavaScript Quiz</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id = "question-container" class= "hide">
+        <div id = "question">Questions</div>
+        <div id = "answers">
+         <div id = "answer-btn" class= "btn-grid">
+           <button class= "btn">Answer 1</button>
+           <button class= "btn">Answer 2</button>
+           <button class= "btn">Answer 3</button>
+           <button class= "btn">Answer 4</button>
+          </div>
+        </div>
+        </div>
+        <div class="controls">
+          <div id = "myText" ><p>This is the Javscript quiz . You will be given 5 questions and 30 seconds for each question. The quiz ends one the time is 2minutes 30 seconds or you have reached end of questions or clicked submit button. Once you press submit , please enter your name and it will be shown as per the high score.</p></div>
+            <button class="btn btn-start" id="start">Start</button>
+            <!--<button class="btn btn-prev" id="prev">Prev</button>-->
+            <button class="btn btn-next hide" id="next">Next</button>
+            <button class="btn btn-submit submit-hide" id="submit ">Submit</button>
+            <form id="q1form" class= "forms">
+              <div id= "fscore" class= "fScore">Your final score is </div>
+              <label for="fname">Enter initials:</label>
+              <input type="text" id="fname" name="fname">
+              <input type="submit" value="Submit">
+              <div id="myData"></div>
+          </form>
+             <button class = "btn btn-goBack" id="goback">Go Back</button>
+             <button class = "btn btn-ClearScore" id="clearScore">Clear Scores</button>
+        </div>
+    </div>
+    <script src="../assets/js/script.js"></script>
+  </body>
+</html>
