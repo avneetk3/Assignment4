@@ -10,23 +10,37 @@ const questAnswerElement = document.getElementById('answers');
 const answerButtonsElement = document.getElementById('answer-btn');
 const pData = document.getElementById('myText');
 const fscore = document.getElementById('fscore');
+const ul = document.createElement("ul");// for displaying result
+const li = document.createElement("li"); // for displaying result
+li.className = "resultList";
+const  containerEl = document.getElementById('container');
 
 let currentQuestion = 0;
 let score = 0;
 
 const formEl = document.getElementById('q1form');
-//var tasksToDoEl = document.querySelector("#tasks-to-do")
 
 nextBtn.classList.add('hide');
 formEl.style.display= "none";
 startBtn.addEventListener('click',startGame);
-nextBtn.addEventListener('click',()=>{currentQuestionIndex++
+/*nextBtn.addEventListener('click',()=>{currentQuestionIndex++
     setNextQuestion();
-});
+});*/
+
 function startGame()
 {
     console.log("Start Game");
+    //nextBtn.classList.remove('hide');
+    //formEl.reset();
+    formEl.style.display= "none";
+    ul.classList.add('hide');
+    for (let i = 0; i <= li.length - 1; i++) {
+      
+        li.classList.add('hide');
+    }
+    
     score =0;
+    //formEl.reset();
     startBtn.classList.add('hide');
     pData.classList.add('hide');
     shuffledQuestions= myQuestions.sort(()=> Math.random()- .5);  //to show questions randomly
@@ -83,8 +97,6 @@ function selectAnswer(e)
    // })
     if(shuffledQuestions.length > currentQuestionIndex+1)
     {
-        //nextBtn.classList.remove('hide')
-       // setNextQuestion();
        currentQuestionIndex++;
        setNextQuestion();
     }
@@ -94,7 +106,9 @@ function selectAnswer(e)
         startBtn.classList.remove('hide');*/
         //submitBtn.classList.remove('hide');
         //showResults(questions, quizContainer, resultsContainer);
-        document.body.innerHTML = "";
+        //document.body.innerHTML = "";
+        clearStatusClass(document.body);
+        questionContainer.classList.add('hide');
         showResults(score);
         //exit();
     }
@@ -136,30 +150,26 @@ function clearStatusClass(element)
 
 }
 
-function showResults(score){//, resultsContainer){
+var x = document.createElement("div");              // Create a <div> node
+var t = document.createTextNode("All Done !! ");    // Create a text node
+var t1 = document.createTextNode("Your score is ")
+var t3 = document.createTextNode("Enter your initials");
+
+function showResults(score){
     // code will go here
-   // console.clear();
-   var x = document.createElement("P");                        // Create a <p> node
-   var t = document.createTextNode("All Done !! ");    // Create a text node
-   x.appendChild(t);                                           // Append the text to <p>
-   document.body.appendChild(x);
-    // document.body.innerHTML = "<h3>All Done !!<h3><br> "
-     fscore.innerHTML = score;
-     var t1 = document.createTextNode("Your score is ")
-     //document.body.innerHTML += "" + fscore.innerHTML; 
-     x.appendChild(t1);
-     //x.appendChild(t1+ fscore.innerHTML);
-     var t2 = document.createTextNode(fscore.innerHTML);
-     x.appendChild(t2);
-    x.setAttribute("id", "myForm");
-    document.body.appendChild(x);
-    var t3 = document.createTextNode("Enter your initials");
+  
+        x.appendChild(t);                                           // Append the text to <p>
+        document.body.appendChild(x);
+        fscore.innerHTML = score;
+        x.appendChild(t1);
+        var t2 = document.createTextNode(fscore.innerHTML);
+        x.appendChild(t2);
+        x.setAttribute("id", "myForm");
+        document.body.appendChild(x);
+    
      x.appendChild(t3);
     var y = document.createElement("INPUT");
     y.setAttribute("type", "text");
-    //y.setAttribute("type", "numeric");
-   // y.setAttribute("type","button");
-    //y.setAttribute("value", score);
     document.getElementById("myForm").appendChild(y);
     
     const button= document.createElement('button')
@@ -170,13 +180,11 @@ function showResults(score){//, resultsContainer){
     //var txtOutput = txtName.value;
     x.innerHTML = ""
     var t4 = document.createTextNode(txtName);
-    //x.appendChild(t4)
-    //x.appendChild(t2)
-    var ul = document.createElement("ul");
-    //var name = document.getElementById("txtName");
-    var li = document.createElement("li");
-    //li.setAttribute('txtName','t2');
-    //li.appendChild(document.createTextNode(txtName.value, t2));
+    ul.classList.remove('hide');
+    for (let i = 0; i <= li.length - 1; i++) {
+      
+        ul.li.classList.remove('hide');
+    }
     li.innerHTML = txtName + "  ";
     li.innerHTML+= fscore.innerHTML;
     ul.appendChild(li);
@@ -187,112 +195,10 @@ function showResults(score){//, resultsContainer){
     nextBtn.classList.remove('hide');
     x.appendChild(startBtn);
     x.appendChild(nextBtn)
-    })
-    
-    
- 
-
-       
-    // gather answer containers from our quiz
-    
+    y.classList.add('hide');
+    })  
     
 }
-//}
-//formEl.addEventListener("submit", createTaskHandler);
-
-
-
-/*
-//call quiz questions:
-var quizContainer = document.getElementById('quiz');
-var resultsContainer = document.getElementById('results');
-var submitButton = document.getElementById('submit');
-
-//showQuestions(questions, quizContainer);
-
-function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
-
-	function showQuestions(questions, quizContainer){
-		// code will go here
-        // we'll need a place to store the output and the answer choices
-	   var output = [];
-	   var answers;
-
-	// for each question...
-	  for(var i=0; i<questions.length; i++){
-		
-		// first reset the list of answers
-		answers = [];
-
-		// for each available answer to this question...
-		for(letter in questions[i].answers){
-
-			// ...add an html radio button
-			answers.push(
-				'<label>'
-					+ '<input type="radio" name="question'+i+'" value="'+letter+'">'
-					+ letter + ': '
-					+ questions[i].answers[letter]
-				+ '</label>'
-			);
-		}
-
-		// add this question and its answers to the output
-		output.push(
-			'<div class="question">' + questions[i].question + '</div>'
-			+ '<div class="answers">' + answers.join('') + '</div>'
-		);
-	}
-
-	    // finally combine our output list into one string of html and put it on the page
-	    quizContainer.innerHTML = output.join('');
-}
-
-	function showResults(questions, quizContainer, resultsContainer){
-		// code will go here
-        
-	    // gather answer containers from our quiz
-	    var answerContainers = quizContainer.querySelectorAll('.answers');
-	
-	    // keep track of user's answers
-	    var userAnswer = '';
-	    var numCorrect = 0;
-	
-	    // for each question...
-	    for(var i=0; i<questions.length; i++){
-
-		    // find selected answer
-		    userAnswer = (answerContainers[i].querySelector('input[name=question'+i+']:checked')||{}).value;
-		
-		    // if answer is correct
-		    if(userAnswer===questions[i].correctAnswer){
-			    // add to the number of correct answers
-			    numCorrect++;
-			
-			    // color the answers green
-			    answerContainers[i].style.color = 'lightgreen';
-		}
-		// if answer is wrong or blank
-		else{
-			// color the answers red
-			answerContainers[i].style.color = 'red';
-		}
-	}
-
-	// show number of correct answers out of total
-	resultsContainer.innerHTML = numCorrect + ' out of ' + questions.length;
-	}
-
-	// show the questions
-	showQuestions(questions, quizContainer);
-
-	// when user clicks submit, show results
-	submitButton.onclick = function(){
-		showResults(questions, quizContainer, resultsContainer);
-	}
-}*/
-
-
 //new variables:
 
 
