@@ -259,7 +259,7 @@ function showResults(score){
                x.appendChild(ul);
     highScore.style.display = "block";
     highScore.style.marginRight = "50px";   
-    highScore.style.marginBottom = "300px";  
+    highScore.style.marginBottom = "200px";  
     startBtn.innerText = 'Go Back';
     startBtn.style.marginRight = "500px";
     startBtn.style.alignItems= "center";
