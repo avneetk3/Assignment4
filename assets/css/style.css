@@ -45,7 +45,22 @@ body{
     color: #F6490F
  }
 
+ .highScore{
 
+   display: flex;
+   color: purple;
+   margin-right: 700px;
+   /*margin-bottom: auto;*/
+}
+
+ .timer{
+
+   display: flex; 
+   margin-left: 700px;
+   color: purple;
+   /*margin-bottom: 500px;*/
+
+}
 
  .btn {
     font-size: medium;
@@ -134,6 +149,9 @@ body{
  {
     display: none;
  }
+
+
+ 
 
 /*
 .question{
