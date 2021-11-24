@@ -10,8 +10,8 @@ const questAnswerElement = document.getElementById('answers');
 const answerButtonsElement = document.getElementById('answer-btn');
 const pData = document.getElementById('myText');
 const fscore = document.getElementById('fscore');
-const ul = document.createElement("ul");// for displaying result
-const li = document.createElement("li"); // for displaying result
+var ul = document.createElement("ul");// for displaying result
+var li = document.createElement("li"); // for displaying result
 li.className = "resultList";
 const  containerEl = document.getElementById('container');
 
@@ -26,33 +26,80 @@ startBtn.addEventListener('click',startGame);
 /*nextBtn.addEventListener('click',()=>{currentQuestionIndex++
     setNextQuestion();
 });*/
+var countDownDate = new Date().getTime();  //variable for timer getting time 
+var diff =0; // for timer counting time diffetence 
+var finalValue;
+timer.classList.remove('hide');  //showing timer again to the HTML
+var highScore = document.getElementById('highScore'); // to get high score
+highScore.style.display = 'flex'
+highScore.addEventListener('click',getHighScore) //Adding event listener to get high score 
 
+function getHighScore()
+{
+    for (let i = 0; i <= li.length; i++) 
+        {
+      
+            ul.li.classList.remove('hide');
+            if(localStorage.getItem('li')){
+                console.log(li.value);
+                li.value(localStorage.getItem('li.value')) ;
+                ul.appendChild(li);
+                x.appendChild(ul)
+            }
+            
+         }
+}
+
+//Timer function to update time on user screen, max time limit is 2.5 minutes , that is 2 minutes 30 seconds 
+function updateTimer()
+ {
+   
+    now = new Date();
+    diff = countDownDate - now;
+    var seconds = Math.floor((diff % (120000 * 60)) / 1000);
+    finalValue = countDownDate + now;
+    document.getElementById("timer").innerHTML =  '<div>' + "Time Left"+ seconds + '<span>Seconds</span></div>';
+    if(finalValue == 120000)
+    document.getElementById("timer").innerHTML =  '<div>' + "Time up! Game over !!"+ seconds + '<span>Seconds</span></div>';
+}
+
+
+//Calling start function when start button is clicked 
 function startGame()
 {
     console.log("Start Game");
-    //nextBtn.classList.remove('hide');
-    //formEl.reset();
+    setInterval('updateTimer()', 1000);
+    timer.classList.remove('hide');
+    countDownDate = new Date().getTime();
+    diff = 0;
     formEl.style.display= "none";
     ul.classList.add('hide');
     for (let i = 0; i <= li.length - 1; i++) {
       
         li.classList.add('hide');
     }
+
+    
     
     score =0;
-    //formEl.reset();
     startBtn.classList.add('hide');
     pData.classList.add('hide');
+    //setInterval();
+   // setInterval('updateTimer()', 1000);
     shuffledQuestions= myQuestions.sort(()=> Math.random()- .5);  //to show questions randomly
+    
     currentQuestionIndex = 0;
     questionContainer.classList.remove('hide');
     setNextQuestion();
 
 }
 
+//Function for setting  next question 
 function setNextQuestion()
 {
      resetState();
+     setInterval('updateTimer()', 1000);
+
     showQuestion(shuffledQuestions[currentQuestionIndex]);
 
 }
@@ -70,31 +117,31 @@ function resetState()
 
 function showQuestion(question)
 {
+    setInterval('updateTimer()', 1000);
+
     questionElement.innerText = question.question;
     question.answers.forEach(answer =>{
         const button= document.createElement('button')
         button.innerText = answer.text;
         button.classList.add('btn');
-        //answerButtonsElement.innerText = answer.text
         if(answer.correct)
         {
             button.dataset.correct = answer.correct
         }
         button.addEventListener('click', selectAnswer)
         answerButtonsElement.appendChild(button);
-        //currentQuestionIndex++;
     });
 
 }
 
+//Takes event from one of the seslected answer button
 function selectAnswer(e)
 {
+    setInterval('updateTimer()', 1000);
+
     const selectedButton = e.target
     const correct = selectedButton.dataset.correct;
     setStatusClass(document.body, correct)
-   // Array.from(answerButtonsElement.children).forEach(button =>{
-        //setStatusClass(button, button.dataset.correct)
-   // })
     if(shuffledQuestions.length > currentQuestionIndex+1)
     {
        currentQuestionIndex++;
@@ -102,20 +149,12 @@ function selectAnswer(e)
     }
     else
     {
-       /* startBtn.innerText = 'Restart';
-        startBtn.classList.remove('hide');*/
-        //submitBtn.classList.remove('hide');
-        //showResults(questions, quizContainer, resultsContainer);
-        //document.body.innerHTML = "";
         clearStatusClass(document.body);
         questionContainer.classList.add('hide');
         showResults(score);
-        //exit();
     }
-    //nextBtn.classList.remove('hide');
+    
     console.log("in select answer e"+ currentQuestion);
-    //currentQuestionIndex++;
-    //setNextQuestion();
 }
 
 function setStatusClass(element, correct)
@@ -126,15 +165,18 @@ function setStatusClass(element, correct)
         element.classList.add('correct')
         ++score;
         console.log(score);
-        let p  = document.createElement('p')
-        p.appendChild(document.createTextNode("Correct"));
+        //let p  = document.createElement('p')
+       //p.appendChild(document.createTextNode("Correct"));
+       // document.getElementById("answer").innerHTML =   "Correct";
 
     }
     else{
         element.classList.add('wrong');
-        let p  = document.createElement('p')
-        p.appendChild(document.createTextNode("Wrong"));
+       //let p  = document.createElement('p')
+      //  p.appendChild(document.createTextNode("Wrong"));
         alert("Wrong")
+      // document.getElementById("answer").innerHTML =   "Wrong";
+
         
         //--score;
     }
@@ -150,15 +192,23 @@ function clearStatusClass(element)
 
 }
 
+
+//Creating elements to show result before submitting user name and score 
 var x = document.createElement("div");              // Create a <div> node
 var t = document.createTextNode("All Done !! ");    // Create a text node
+//t.style.marginTop = "200px"
 var t1 = document.createTextNode("Your score is ")
+//t1.style.marginTop = "300px"
+//var t4 = document.createElement("<br>")
 var t3 = document.createTextNode("Enter your initials");
+//t3.style.marginTop = "400px"
 
 function showResults(score){
     // code will go here
-  
-        x.appendChild(t);                                           // Append the text to <p>
+        setInterval(0);
+        timer.classList.add('hide');
+        x.appendChild(t);
+        x.style.alignContent = "center";                               // Append the text to <p>
         document.body.appendChild(x);
         fscore.innerHTML = score;
         x.appendChild(t1);
@@ -167,31 +217,56 @@ function showResults(score){
         x.setAttribute("id", "myForm");
         document.body.appendChild(x);
     
-     x.appendChild(t3);
-    var y = document.createElement("INPUT");
-    y.setAttribute("type", "text");
-    document.getElementById("myForm").appendChild(y);
-    
-    const button= document.createElement('button')
-    button.innerText = "Submit";
-    button.classList.add('btn');
-    x.appendChild(button);
-    button.addEventListener('click', function(){ var txtName =y.value;
-    //var txtOutput = txtName.value;
-    x.innerHTML = ""
-    var t4 = document.createTextNode(txtName);
-    ul.classList.remove('hide');
-    for (let i = 0; i <= li.length - 1; i++) {
+        x.appendChild(t3);
+        x.marginRight = "1000px";
+        var y = document.createElement("INPUT");
+        y.setAttribute("type", "text");
+        document.getElementById("myForm").appendChild(y);
+        y.style.display = "flex"
+        y.style.marginRight = "1000px";
+        y.style.marginTop = "200px"
+        
+        //x.appendChild(t4);
+        const button= document.createElement('button')
+        button.innerText = "Submit";
+        button.classList.add('btn');
+        button.style.alignItems= "center";
+        x.appendChild(button);
+        button.addEventListener('click', function(){ var txtName =y.value;
+        //var txtOutput = txtName.value;
+        x.innerHTML = ""
+        var t4 = document.createTextNode(txtName);
+        //t4.style.alignItems= "center";
+        ul.classList.remove('hide');
+        for (let i = 0; i <= li.length; i++) 
+        {
       
-        ul.li.classList.remove('hide');
-    }
-    li.innerHTML = txtName + "  ";
-    li.innerHTML+= fscore.innerHTML;
-    ul.appendChild(li);
-    x.appendChild(ul);
+            ul.li.classList.remove('hide');
+            if(localStorage.getItem('li')){
+                console.log(li.value);
+                li.value(localStorage.getItem('li.value')) ;
+                ul.appendChild(li);
+                x.appendChild(ul)
+            }
+            
+         }
+         li = document.createElement("li"); // for displaying result
+               li.innerHTML  = txtName + "  ";
+               li.innerHTML+= fscore.innerHTML;
+               let val = li.value;
+               localStorage.setItem("li", JSON.stringify(val));
+               ul.appendChild(li);
+               x.appendChild(ul);
+    highScore.style.display = "block";
+    highScore.style.marginRight = "50px";   
+    highScore.style.marginBottom = "300px";  
     startBtn.innerText = 'Go Back';
+    startBtn.style.marginRight = "500px";
+    startBtn.style.alignItems= "center";
     startBtn.classList.remove('hide');
     nextBtn.innerText = 'Clear High Score';
+    nextBtn.style.marginRight= "400px";
+    startBtn.style.alignItems= "center";
     nextBtn.classList.remove('hide');
     x.appendChild(startBtn);
     x.appendChild(nextBtn)
@@ -199,7 +274,7 @@ function showResults(score){
     })  
     
 }
-//new variables:
+//new variables for Quiz answers
 
 
 
@@ -268,138 +343,3 @@ var myQuestions = [
 
 ];
 
-
-//click events:
-/*restartBtn.addEventListener("click", restart);
-prevBtn.addEventListener("click", prev);
-nextBtn.addEventListener("click",next);
-submitBtn.addEventListener("click",submit);
-
-
-function beginQuiz() {
-    currentQuestion = 0;
-    totalScore.innerHTML = questions.length;
-    questionText.innerHTML = questions[currentQuestion].question;
-    trueBtn.innerHTML = questions[currentQuestion].answers[0].option;
-    trueBtn.onclick = () => {
-        if(questions[currentQuestion].answers[0].answer) {
-            if(score < 3) {
-                score++;
-            }
-        }
-        userScore.innerHTML = score;
-        if(currentQuestion < 2) {
-            next();
-        }
-    }
-  
-    falseBtn.innerHTML = questions[currentQuestion].answers[1].option;
-    falseBtn.onclick = () => {
-        if(questions[currentQuestion].answers[1].answer) {
-            if(score < 3) {
-                score++;
-            }
-        }
-        userScore.innerHTML = score;
-        if(currentQuestion < 2) {
-            next();
-        }
-    }
-  
-    prevBtn.classList.add("hide");
- }
-  
- beginQuiz();
-
- function restart() {
-    currentQuestion = 0;
-    prevBtn.classList.remove("hide");
-    nextBtn.classList.remove("hide");
-    submitBtn.classList.remove("hide");
-    trueBtn.classList.remove("hide");
-    falseBtn.classList.remove("hide");
-    score = 0;
-    userScore.innerHTML = score;
-    beginQuiz();
- }
-
-
- function next() {
-    currentQuestion++;
-    if(currentQuestion >= 2) {
-        nextBtn.classList.add("hide");
-        prevBtn.classList.remove("hide");
-    }
-    questionText.innerHTML = questions[currentQuestion].question;
-    trueBtn.innerHTML = questions[currentQuestion].answers[0].option;
-    trueBtn.onclick = () => {
-        if(questions[currentQuestion].answers[0].answer) {
-            if(score < 3) {
-                score++;
-            }
-        }
-        userScore.innerHTML = score;
-        if(currentQuestion < 2) {
-            next();
-        }
-    }
-  
-    falseBtn.innerHTML = questions[currentQuestion].answers[1].option;
-    falseBtn.onclick = () => {
-        if(questions[currentQuestion].answers[1].answer) {
-            if(score < 3) {
-                score++;
-            }
-        }
-        userScore.innerHTML = score;
-        if(currentQuestion < 2) {
-            next();
-        }
-    }
-  
-    prevBtn.classList.remove("hide");
- }
-
- function prev() {
-    currentQuestion--;
-    if(currentQuestion <= 0) {
-        nextBtn.classList.remove("hide");
-        prevBtn.classList.add("hide");
-    }
-    questionText.innerHTML = questions[currentQuestion].question;
-    trueBtn.innerHTML = questions[currentQuestion].answers[0].option;
-    trueBtn.onclick = () => {
-        if(questions[currentQuestion].answers[0].answer) {
-            if(score < 3) {
-                score++;
-            }
-        }
-        userScore.innerHTML = score;
-        if(currentQuestion < 2) {
-            next();
-        }
-    }
-  
-    falseBtn.innerHTML = questions[currentQuestion].answers[1].option;
-    falseBtn.onclick = () => {
-        if(questions[currentQuestion].answers[1].answer) {
-            if(score < 3) {
-                score++;
-            }
-        }
-        userScore.innerHTML = score;
-        if(currentQuestion < 2) {
-            next();
-        }
-    }
-  
-    nextBtn.classList.remove("hide");
- }
- function submit() {
-    prevBtn.classList.add("hide");
-    nextBtn.classList.add("hide");
-    submitBtn.classList.add("hide");
-    trueBtn.classList.add("hide");
-    falseBtn.classList.add("hide");   
-    questionText.innerHTML ="Congratulations on submitting the Quiz!"
- }*/
